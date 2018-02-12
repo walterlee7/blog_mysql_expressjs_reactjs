@@ -40,7 +40,7 @@ class BlogForm extends Component {
                     />
                     <div className="form-group">
                         <label htmlFor="exampleFormControlSelect1">Choose Tag</label>
-                        <select multiple className="form-control" id="exampleFormControlSelect1">
+                        <select className="form-control" id="exampleFormControlSelect1">
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>

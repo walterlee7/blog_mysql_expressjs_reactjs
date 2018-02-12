@@ -51,7 +51,7 @@ class HelloWorld extends Component {
             <Fragment>
                 <nav className="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
                     <div className="container">
-                        <a className="navbar-brand" href="index.html">Start Bootstrap</a>
+                        <a className="navbar-brand" href="index.html">Navigation</a>
                         <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu<i className="fa fa-bars"></i>
                         </button>
                         <div className="collapse navbar-collapse" id="navbarResponsive">
@@ -78,8 +78,8 @@ class HelloWorld extends Component {
                         <div className="row">
                             <div className="col-lg-8 col-md-10 mx-auto">
                                 <div className="site-heading">
-                                    <h1>Clean Blog</h1>
-                                    <span className="subheading">A Blog Theme by Start Bootstrap</span>
+                                    <h1>Walt's Blog</h1>
+                                    <span className="subheading">A Blog Theme with ExpressJS, ReactJS, and MySQL</span>
                                 </div>
                             </div>
                         </div>
@@ -107,7 +107,7 @@ class HelloWorld extends Component {
                                         Problems look mighty small from 150 miles up
                                     </h3>
                                 </a>
-                                <p className="post-meta">Posted by<a href="#">Start Bootstrap</a>on September 24, 2018</p>
+                                <p className="post-meta">Posted by<a href="#">Navigation</a>on September 24, 2018</p>
                             </div>
                             <hr />
                             <div className="post-preview">
@@ -116,7 +116,7 @@ class HelloWorld extends Component {
                                         I believe every human has a finite number of heartbeats. I don't intend to waste any of mine.
                                     </h2>
                                 </a>
-                                <p className="post-meta">Posted by<a href="#">Start Bootstrap</a>on September 18, 2018</p>
+                                <p className="post-meta">Posted by<a href="#">Navigation</a>on September 18, 2018</p>
                             </div>
                             <hr />
                             <div className="post-preview">
@@ -129,7 +129,7 @@ class HelloWorld extends Component {
               </h3>
                                 </a>
                                 <p className="post-meta">Posted by
-              <a href="#">Start Bootstrap</a>
+              <a href="#">Navigation</a>
                                     on August 24, 2018</p>
                             </div>
                             <hr />
@@ -143,7 +143,7 @@ class HelloWorld extends Component {
               </h3>
                                 </a>
                                 <p className="post-meta">Posted by
-              <a href="#">Start Bootstrap</a>
+              <a href="#">Navigation</a>
                                     on July 8, 2018</p>
                             </div>
                             <hr />

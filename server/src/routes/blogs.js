@@ -24,21 +24,6 @@ router.get('/:id?', (req, res) => {
 
 });
 
-router.get('/:id?', (req, res) => {
-    const id = req.params.id;
-    if (!id) {
-        db.GetChirps()
-            .then((chirp) => {
-
-                res.send(chirp);
-            }).catch((err) => {
-                console.log(err);
-            });
-    } else {
-        res.send(db.GetChirp(id));
-    }
-});
-
 router.post('/', (req, res) => {
 
     let blog = req.body;
@@ -60,6 +45,7 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
     blogs.delete(req.params.id)
         .then(() => {
+            console.log('delete success');
             res.sendStatus(200);
         })
 });

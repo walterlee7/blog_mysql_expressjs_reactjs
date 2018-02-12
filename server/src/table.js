@@ -53,10 +53,10 @@ class Table {
         return executeQuery(sql);
     }
 
-    delete(id) {
-        let sql = `DELETE FROM ${this.tableName} WHERE blogid = ${id}`;
-        return executeQuery(sql);
-    }
+    // delete(id) {
+    //     let sql = `DELETE FROM ${this.tableName} WHERE blogid = ${id}`;
+    //     return executeQuery(sql);
+    // }
 }
 
 export default Table;
