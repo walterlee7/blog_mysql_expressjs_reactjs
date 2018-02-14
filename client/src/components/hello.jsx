@@ -1,7 +1,9 @@
 import React, { Component, Fragment } from 'react';
-import { render } from 'react-dom';
+//import { render } from 'react-dom';
+import AuthButton from './auth/authButton';
 import BlogForm from './blogForm';
 import BlogList from './blogList';
+import * as blogService from '../services/blogs';
 
 class HelloWorld extends Component {
 
@@ -18,10 +20,8 @@ class HelloWorld extends Component {
     }
 
     getBlogs() {
-        fetch('/api/blogs/')
-            .then((response) => {
-                return response.json();
-            }).then((blogs) => {
+        blogService.all()
+            .then((blogs) => {
                 this.setState({
                     blogs
                 });
@@ -31,18 +31,13 @@ class HelloWorld extends Component {
     }
 
     addBlog(blog) {
-        fetch('/api/blogs/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(blog)
-        }).then(() => {
-            console.log(blog);
-            this.getBlogs();
-        }).catch((err) => {
-            console.log(err);
-        });
+        blogService.insert(blog)
+            .then(() => {
+                console.log(blog);
+                this.getBlogs();
+            }).catch((err) => {
+                console.log(err);
+            });
     }
 
 
@@ -88,6 +83,7 @@ class HelloWorld extends Component {
 
                 <div className="container">
                     <BlogForm postBlog={(blog) => { this.addBlog(blog); }} />
+                    <AuthButton />
                     <div className="row">
                         <div className="col-lg-8 col-md-10 mx-auto">
                             <BlogList blogs={this.state.blogs} />

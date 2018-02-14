@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import BlogForm from './blogForm';
+import BlogList from './blogList';
 import * as blogService from '../services/blogs';
 
-class Edit extends Component {
+class Admin extends Component {
     constructor(props) {
         super(props);
 
@@ -11,24 +12,36 @@ class Edit extends Component {
                 title: '',
                 content: '',
                 id: 1
-            }
+            },
+            blogs: []
         };
     }
 
     componentDidMount() {
-        this.getBlog();
+        this.getBlogs();
     }
 
-    getBlog() {
-        blogService.one(this.props.match.params.id)
-            .then((blog) => {
+    getBlogs() {
+        blogService.all()
+            .then((blogs) => {
                 this.setState({
-                    blog
+                    blogs
                 });
             }).catch((err) => {
                 console.log(err);
             });
     }
+
+    addBlog(blog) {
+        blogService.insert(blog)
+            .then(() => {
+                console.log(blog);
+                this.getBlogs();
+            }).catch((err) => {
+                console.log(err);
+            });
+    }
+
 
     updateBlog(blog) {
         blogService.update(this.props.match.params.id, blog)
@@ -40,8 +53,9 @@ class Edit extends Component {
     }
 
     deleteBlog() {
-        blogService.destroy(this.props.match.params.id)
+        blogService.destroyAll()
             .then(() => {
+                console.log('delete complete');
                 this.props.history.push('/');
             }).catch((err) => {
                 console.log(err);
@@ -52,22 +66,16 @@ class Edit extends Component {
         return (
             <React.Fragment>
                 <div className="container">
-                    <div className="post-preview">
-                        <a href="post.html">
-                            <h2 className="post-title">
-                                {this.state.blog.title}
-                            </h2>
-                            <h3 className="post-subtitle">
-                                {this.state.blog.content}
-                            </h3>
-                        </a>
-                        <p className="post-meta">Posted by on {this.state.blog._created}</p>
-                    </div>
-                    <BlogForm postBlog={(blog) => { this.updateBlog(blog); }} />
+                    <BlogForm postBlog={(blog) => { this.addBlog(blog); }} />
                     <div>
                         <button className="delete"
-                            onClick={() => { this.deleteBlog(); }}>Delete Blog
+                            onClick={() => { this.deleteBlog(); }}>Delete All Blogs
                         </button>
+                    </div>
+                    <div className="row">
+                        <div className="col-lg-8 col-md-10 mx-auto">
+                            <BlogList blogs={this.state.blogs} />
+                        </div>
                     </div>
                 </div>
             </ React.Fragment>
@@ -75,4 +83,4 @@ class Edit extends Component {
     }
 }
 
-export default Edit;
+export default Admin;

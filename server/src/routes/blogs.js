@@ -45,7 +45,14 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
     blogs.delete(req.params.id)
         .then(() => {
-            console.log('delete success');
+            console.log('BE: delete success');
+            res.sendStatus(200);
+        })
+});
+router.delete('/', (req, res) => {
+    blogs.deleteAll()
+        .then(() => {
+            console.log('BE: delete success');
             res.sendStatus(200);
         })
 });
