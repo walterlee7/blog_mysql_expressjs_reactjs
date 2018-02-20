@@ -50,6 +50,13 @@ function json(url, method = 'GET', payload = {}) {
                 }
                 return response.statusText;
             }
+            if (/application\/json/i.test(response.headers.get('Content-Type'))) {
+                return response.json()
+                    .then((value) => {
+                        throw value;
+                    });
+            }
+
             throw response;
         });
 }

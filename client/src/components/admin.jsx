@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import BlogForm from './blogForm';
 import BlogList from './blogList';
+import AuthButton from './auth/authButton';
 import * as blogService from '../services/blogs';
 
 class Admin extends Component {
@@ -67,6 +68,7 @@ class Admin extends Component {
             <React.Fragment>
                 <div className="container">
                     <BlogForm postBlog={(blog) => { this.addBlog(blog); }} />
+                    <AuthButton />
                     <div>
                         <button className="delete"
                             onClick={() => { this.deleteBlog(); }}>Delete All Blogs

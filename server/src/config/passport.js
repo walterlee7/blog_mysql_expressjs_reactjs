@@ -3,6 +3,7 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as BearerStrategy } from 'passport-http-bearer';
 import Table from '../table';
 import { encode, decode } from '../utils/tokens';
+import { checkPassword } from '../utils/security';
 
 let usersTable = new Table('users');
 let tokensTable = new Table('tokens');
@@ -14,23 +15,26 @@ function configurePassport(app) {
         sessions: false
     }, (email, password, done) => {
         usersTable.find({ email })
-            .then((results) => {
-                // console.log('email: ' + results[0]);
-                return results[0];
-            }).then((result) => {
-                if (result && result.password && result.password === password) {
-                    // console.log('result: ' + result);
-                    // console.log('password: ' + password);
-                    tokensTable.insert({
-                        userid: result.id
-                    })
-                        .then((idObj) => {
-                            return encode(idObj.id);
-                        }).then((tokenValue) => {
-                            return done(null, { token: tokenValue });
+            .then((results) => results[0])
+            .then((user) => {
+                if (user && user.hash) {
+                    checkPassword(password, user.hash)
+                        .then((matches) => {
+                            if (matches === true) {
+                                tokensTable.insert({
+                                    userid: user.id
+                                })
+                                    .then((idObj) => encode(idObj.id))
+                                    .then((token) => {
+                                        return done(null, { token });
+                                    });
+                            } else {
+                                return done(null, false, { message: 'Invalid login' });
+                            }
+                        }).catch((err) => {
+                            throw err;
                         });
                 } else {
-                    // console.log('invalid login');
                     return done(null, false, { message: 'Invalid login' });
                 }
             }).catch((err) => {

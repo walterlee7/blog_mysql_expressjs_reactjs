@@ -1,11 +1,10 @@
 import React, { Component, Fragment } from 'react';
-//import { render } from 'react-dom';
 import AuthButton from './auth/authButton';
 import BlogForm from './blogForm';
 import BlogList from './blogList';
 import * as blogService from '../services/blogs';
 
-class HelloWorld extends Component {
+class Home extends Component {
 
     constructor(props) {
         super(props);
@@ -46,22 +45,28 @@ class HelloWorld extends Component {
             <Fragment>
                 <nav className="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
                     <div className="container">
-                        <a className="navbar-brand" href="index.html">Navigation</a>
+                        <a className="navbar-brand" href="/">Navigation</a>
                         <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu<i className="fa fa-bars"></i>
                         </button>
                         <div className="collapse navbar-collapse" id="navbarResponsive">
                             <ul className="navbar-nav ml-auto">
                                 <li className="nav-item">
+                                    <a className="nav-link" href="/login">Login</a>
+                                </li>
+                                <li className="nav-item">
                                     <a className="nav-link" href="/">Home</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="/api/users">About</a>
+                                    <a className="nav-link" href="/donate">Donate</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="post.html">Sample Post</a>
+                                    <a className="nav-link" href="/signup">Sign Up</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="contact.html">Contact</a>
+                                    <a className="nav-link" href="/contact">Contact</a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="/admin">Admin</a>
                                 </li>
                             </ul>
                         </div>
@@ -193,4 +198,4 @@ class HelloWorld extends Component {
     }
 }
 
-export default HelloWorld;
+export default Home;

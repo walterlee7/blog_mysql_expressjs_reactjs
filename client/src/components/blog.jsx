@@ -13,7 +13,7 @@ const Blog = (props) => {
                         {props.blog.content}
                     </h3>
                 </a>
-                <p className="post-meta">Posted by on {props.blog._created}</p>
+                <p className="post-meta">Posted by {props.blog.user} on {props.blog._created}</p>
                 <EditButton id={props.index} />
             </div>
             <hr />

@@ -24,7 +24,7 @@ class BlogForm extends Component {
                 <form className="card p-3 m-1">
                     <label
                         htmlFor="blog-input"
-                        className="d-block m-2">Create a Blog:
+                        className="d-block m-2">Create a Blog: (Login Required)
                 </label>
                     <input
                         value={this.state.title}

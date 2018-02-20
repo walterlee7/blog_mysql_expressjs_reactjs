@@ -1,10 +1,11 @@
 import { Router } from 'express';
-import { isLoggedIn } from '../middleware/auth.mw';
+import { tokenMiddleware, isLoggedIn } from '../middleware/auth.mw';
 // import { read } from 'fs';
 
 let router = Router();
 
-router.get('/me', isLoggedIn, (req, res) => {
+router.get('/me', tokenMiddleware, isLoggedIn, (req, res) => {
+    delete req.user.hash;
     res.json(req.user);
 });
 
