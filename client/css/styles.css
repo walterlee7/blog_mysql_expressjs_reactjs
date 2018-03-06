@@ -78,3 +78,7 @@
   .StripeElement.PaymentRequestButton {
     padding: 0;
   }
+
+  #navstrong {
+      background-color: wheat;
+  }

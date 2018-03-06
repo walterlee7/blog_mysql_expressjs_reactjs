@@ -8,6 +8,23 @@ class Table {
         this.tableName = tableName;
     }
 
+    getLocation(location) {
+        let sql = `SELECT * FROM ${this.tableName} WHERE artist_location = ` + "'" + location + "'";
+        return executeQuery(sql);
+    }
+
+
+    getInstrument(instrument) {
+        let sql = `SELECT * FROM ${this.tableName} WHERE artist_instrument = ` + "'" + instrument + "'";
+        return executeQuery(sql);
+    }
+
+    getLocationAndInstrument(location, instrument) {
+        let sql = `SELECT * FROM ${this.tableName} WHERE (artist_instrument = ` + "'" + instrument + 'AND artist_location = ' + "'" + location + "'";
+        return executeQuery(sql);
+    }
+
+
     getOne(id) {
         let sql = `SELECT * FROM ${this.tableName} WHERE id = ${id};`;
         return executeQuery(sql, [id])
