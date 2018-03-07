@@ -20,7 +20,7 @@ class Table {
     }
 
     getLocationAndInstrument(location, instrument) {
-        let sql = `SELECT * FROM ${this.tableName} WHERE (artist_instrument = ` + "'" + instrument + 'AND artist_location = ' + "'" + location + "'";
+        let sql = `SELECT * FROM ${this.tableName} WHERE (artist_instrument = ` + "'" + instrument + "' " + 'AND artist_location = ' + "'" + location + "')";
         return executeQuery(sql);
     }
 

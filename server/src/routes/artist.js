@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
         });
 });
 
-router.get('/both/:location?_:instrument?', (req, res) => {
+router.get('/both/:location/:instrument', (req, res) => {
     const location = req.params.location;
     const instrument = req.params.instrument;
     console.log(req.params);
