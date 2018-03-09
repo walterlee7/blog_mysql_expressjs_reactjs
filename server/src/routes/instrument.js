@@ -16,4 +16,15 @@ router.get('/', (req, res) => {
         });
 });
 
+router.get('/i/', (req, res) => {
+    instruments.getInstruments()
+        .then((instruments) => {
+            console.log('BE: Instrument');
+            res.json(instruments);
+        }).catch(err => {
+            // console.log('BE: Instrument');
+            console.log(err);
+        });
+});
+
 module.exports = router;

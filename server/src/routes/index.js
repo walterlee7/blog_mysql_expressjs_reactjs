@@ -9,6 +9,8 @@ import locationRouter from './location'; //new
 import instrumentRouter from './instrument'; //new
 import artistRouter from './artist'; //new
 import genreRouter from './genre'; //new
+import testRouter from './test'; //new
+import test2Router from './test2'; //new
 import { isLoggedIn, tokenMiddleware } from '../middleware/auth.mw';
 
 let router = Router();
@@ -16,6 +18,8 @@ let router = Router();
 router.use('/artist', artistRouter); //new
 router.use('/location', locationRouter); //new
 router.use('/instrument', instrumentRouter); //new
+router.use('/test', testRouter); //new
+router.use('/test2', test2Router); //new
 router.use('/genre', genreRouter); //new
 router.use('/auth', authRouter);
 router.use('/donate', stripeDonationsRouter);

@@ -6,9 +6,10 @@ const router = express.Router();
 let genres = new Table('genres');
 
 router.get('/', (req, res) => {
-    genres.getAll()
+    genres.getGenre()
         .then((genres) => {
             console.log('BE Success: Genres');
+            console.log(genres);
             res.json(genres);
         }).catch(err => {
             console.log('BE Fail: Genres');
