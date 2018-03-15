@@ -18,9 +18,9 @@ import { isLoggedIn, tokenMiddleware } from '../middleware/auth.mw';
 
 let router = Router();
 
-router.use('/message', messageRouter);
-router.use('/photo', photoRouter);
-router.use('/user', userRouter);
+router.use('/message', messageRouter); //new
+router.use('/photo', photoRouter); //new
+router.use('/user', userRouter); //new
 router.use('/artist', artistRouter); //new
 router.use('/location', locationRouter); //new
 router.use('/instrument', instrumentRouter); //new

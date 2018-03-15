@@ -23,28 +23,6 @@ class Table {
         return executeQuery(sql);
     }
 
-    // insertInstrument(columns, values) {
-    //     let placeholderString = generatePlaceholders(values);
-    //     let sql = `INSERT INTO ${this.tableName} (${columns.join(',')}) VALUES (${placeholderString});`;
-
-    //     return executeQuery(sql, values)
-    //         .then((results) => (
-    //             { id: results.insertId }
-    //         ));
-    // }
-
-    // insertGenre(id, columns, values) {
-    //     let placeholderString = generatePlaceholders(values);
-    //     console.log('placeholder: ' + placeholderString);
-    //     console.dir(placeholderString);
-    //     let sql = `INSERT INTO ${this.tableName} (${columns.join(',')}) VALUES (${placeholderString}) WHERE userid = ${id};`;
-
-    //     return executeQuery(sql, values)
-    //         .then((results) => (
-    //             { id: results.insertId }
-    //         ));
-    // }
-
     updateGenre(row) {
         let columns = Object.keys(row);
         let values = Object.values(row);
@@ -98,6 +76,32 @@ class Table {
         return executeQuery(sql);
     }
 
+    insertPhoto(row) {
+        let columns = Object.keys(row);
+        let values = Object.values(row);
+        let placeholderString = generatePlaceholders(values);
+        let sql = `INSERT INTO ${this.tableName} (${columns.join(',')}) VALUES (${placeholderString});`;
+        return executeQuery(sql, values)
+            .then((results) => ({ id: results.insertId }));
+    }
+
+    updatePhoto(id, row) {
+        let columns = Object.keys(row);
+        let values = Object.values(row);
+        let updates = columns.map((columnName) => {
+            return `${columnName} = ?`;
+        });
+        let sql = `UPDATE ${this.tableName} SET ${updates.join(', ')} WHERE id = ${id};`;
+        console.log(sql);
+        console.log(values);
+        return executeQuery(sql, values);
+    }
+
+    getPhoto(id) {
+        let sql = `SELECT ${this.tableName}.image FROM ${this.tableName} WHERE id = ${id};`;
+        return executeQuery(sql, [id])
+            .then((results) => results[0]);
+    }
 
     getOne(id) {
         let sql = `SELECT * FROM ${this.tableName} WHERE id = ${id};`;
@@ -133,7 +137,6 @@ class Table {
     }
 
     insert(row) {
-        console.log('inserting...');
         let columns = Object.keys(row);
         let values = Object.values(row);
         let placeholderString = generatePlaceholders(values);
