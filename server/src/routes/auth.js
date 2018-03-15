@@ -14,6 +14,8 @@ router.post('/login', (req, res, next) => {
             return res.status(201).json(tok);
         }
     })(req, res, next);
+    // console.log('res: ' + res);
+    // console.dir(res);
 });
 
 export default router;

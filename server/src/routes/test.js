@@ -5,19 +5,18 @@ const router = express.Router();
 
 let test = new Table('test');
 
-router.post('/', (req, res, next) => {
+router.put('/:id', (req, res, next) => {
 
-    console.log(req.body);
+    let genres = req.body;
+    let id = req.params.id;
 
-    let genre = req.body;
+    genres.userid = id;
 
-    test.insertGenre(genre)
-        .then((id) => {
-            console.log('BE Success: Test');
-            console.log(id);
-            res.json(id);
-        }).catch(err => {
-            console.log('BE Fail: Test');
+    test.updateGenre(genres)
+        .then(() => {
+            res.json({});
+        }).catch((err) => {
+            console.log('update Genre fail')
             console.log(err);
         })
 });

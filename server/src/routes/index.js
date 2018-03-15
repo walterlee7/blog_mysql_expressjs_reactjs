@@ -11,10 +11,16 @@ import artistRouter from './artist'; //new
 import genreRouter from './genre'; //new
 import testRouter from './test'; //new
 import test2Router from './test2'; //new
+import userRouter from './user'; //new
+import photoRouter from './photo'; //new
+import messageRouter from './message'; //new
 import { isLoggedIn, tokenMiddleware } from '../middleware/auth.mw';
 
 let router = Router();
 
+router.use('/message', messageRouter);
+router.use('/photo', photoRouter);
+router.use('/user', userRouter);
 router.use('/artist', artistRouter); //new
 router.use('/location', locationRouter); //new
 router.use('/instrument', instrumentRouter); //new

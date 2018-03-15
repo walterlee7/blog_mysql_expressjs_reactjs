@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { injectStripe } from 'react-stripe-elements';
 import { postCharge } from '../services/stripeService';
-
 import CardSection from './cardSection';
 
 class CheckoutForm extends Component {

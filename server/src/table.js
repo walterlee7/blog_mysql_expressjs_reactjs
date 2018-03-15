@@ -9,50 +9,68 @@ class Table {
 
     }
 
-    insertInstrument(row) {
-        console.log(row.length);
-        let columns = [];
-        if (row.length == 1) {
-            columns.push('instrument1');
-        } else if (row.length == 2) {
-            columns.push('instrument1', 'instrument2');
-        } else if (row.length == 3) {
-            columns.push('instrument1', 'instrument2', 'instrument3');
-        } else {
-            console.log('instrument error');
-        }
-
-        let values = row;
-        let placeholderString = generatePlaceholders(values);
-        let sql = `INSERT INTO ${this.tableName} (${columns.join(',')}) VALUES (${placeholderString});`;
-
-        return executeQuery(sql, values)
-            .then((results) => (
-                { id: results.insertId }
-            ));
+    getRecent(userid) {
+        let sql = `SELECT *
+        FROM messages msg1
+        WHERE msg1.id = (
+             SELECT msg2.id
+             FROM messages msg2
+             WHERE msg2.receiverid = msg1.receiverid
+             ORDER BY msg2.id
+             LIMIT 1
+        )
+        group by _created DESC;`;
+        return executeQuery(sql);
     }
 
-    insertGenre(row) {
-        console.log(row.length);
-        let columns = [];
-        if (row.length == 1) {
-            columns.push('genre1');
-        } else if (row.length == 2) {
-            columns.push('genre1', 'genre2');
-        } else if (row.length == 3) {
-            columns.push('genre1', 'genre2', 'genre3');
-        } else {
-            console.log('genre error');
-        }
+    // insertInstrument(columns, values) {
+    //     let placeholderString = generatePlaceholders(values);
+    //     let sql = `INSERT INTO ${this.tableName} (${columns.join(',')}) VALUES (${placeholderString});`;
 
-        let values = row;
-        let placeholderString = generatePlaceholders(values);
-        let sql = `INSERT INTO ${this.tableName} (${columns.join(',')}) VALUES (${placeholderString});`;
+    //     return executeQuery(sql, values)
+    //         .then((results) => (
+    //             { id: results.insertId }
+    //         ));
+    // }
 
-        return executeQuery(sql, values)
-            .then((results) => (
-                { id: results.insertId }
-            ));
+    // insertGenre(id, columns, values) {
+    //     let placeholderString = generatePlaceholders(values);
+    //     console.log('placeholder: ' + placeholderString);
+    //     console.dir(placeholderString);
+    //     let sql = `INSERT INTO ${this.tableName} (${columns.join(',')}) VALUES (${placeholderString}) WHERE userid = ${id};`;
+
+    //     return executeQuery(sql, values)
+    //         .then((results) => (
+    //             { id: results.insertId }
+    //         ));
+    // }
+
+    updateGenre(row) {
+        let columns = Object.keys(row);
+        let values = Object.values(row);
+        let updates = columns.map((columnName) => {
+            return `${columnName} = ?`;
+        });
+        let delSql = `DELETE FROM ${this.tableName} WHERE userid = ${row.userid};`;
+        let sql = `INSERT INTO ${this.tableName} SET ${updates.join(',')}`;
+        return executeQuery(delSql)
+            .then(() => {
+                return executeQuery(sql, values);
+            });
+    }
+
+    updateInstrument(row) {
+        let columns = Object.keys(row);
+        let values = Object.values(row);
+        let updates = columns.map((columnName) => {
+            return `${columnName} = ?`;
+        });
+        let delSql = `DELETE FROM ${this.tableName} WHERE userid = ${row.userid};`;
+        let sql = `INSERT INTO ${this.tableName} SET ${updates.join(',')}`;
+        return executeQuery(delSql)
+            .then(() => {
+                return executeQuery(sql, values);
+            });
     }
 
     getInstruments() {
@@ -66,23 +84,35 @@ class Table {
     }
 
     getLocation(location) {
-        let sql = `SELECT * FROM ${this.tableName} WHERE artist_location = ` + "'" + location + "'";
+        let sql = `SELECT users.name, users.location, users.id, users.aboutme FROM ${this.tableName} WHERE location = ` + `"${location}"`;
         return executeQuery(sql);
     }
 
     getInstrument(instrument) {
-        let sql = `SELECT * FROM ${this.tableName} WHERE artist_instrument = ` + "'" + instrument + "'";
+        let sql = `SELECT test2.userid, users.name, users.location, users.id, users.aboutme FROM test2 JOIN users ON users.id = test2.userid WHERE Concat(IFNULL(instrument0, ' '), IFNULL(instrument1, ' '), IFNULL(instrument2, ' '), IFNULL(instrument3, ' '), IFNULL(instrument4, ' '), IFNULL(instrument5, ' '), IFNULL(instrument6, ' '), IFNULL(instrument7, ' '), IFNULL(instrument8, ' '), IFNULL(instrument9, ' '), IFNULL(instrument10, ' '), IFNULL(instrument11, ' '), IFNULL(instrument12, ' '), IFNULL(instrument13, ' '), IFNULL(instrument14, ' '), IFNULL(instrument15, ' '), IFNULL(instrument16, ' '), IFNULL(instrument17, ' '), IFNULL(instrument18, ' '), IFNULL(instrument19, ' ')) like ` + "'%" + instrument + "%';";
         return executeQuery(sql);
     }
 
     getLocationAndInstrument(location, instrument) {
-        let sql = `SELECT * FROM ${this.tableName} WHERE (artist_instrument = ` + "'" + instrument + "' " + 'AND artist_location = ' + "'" + location + "')";
+        let sql = `SELECT test2.userid, users.name, users.location, users.id, users.aboutme FROM test2 JOIN users ON users.id = test2.userid WHERE Concat(IFNULL(instrument0, ' '), IFNULL(instrument1, ' '), IFNULL(instrument2, ' '), IFNULL(instrument3, ' '), IFNULL(instrument4, ' '), IFNULL(instrument5, ' '), IFNULL(instrument6, ' '), IFNULL(instrument7, ' '), IFNULL(instrument8, ' '), IFNULL(instrument9, ' '), IFNULL(instrument10, ' '), IFNULL(instrument11, ' '), IFNULL(instrument12, ' '), IFNULL(instrument13, ' '), IFNULL(instrument14, ' '), IFNULL(instrument15, ' '), IFNULL(instrument16, ' '), IFNULL(instrument17, ' '), IFNULL(instrument18, ' '), IFNULL(instrument19, ' ')) like ` + "'%" + instrument + "%' AND users.location = " + "'" + location + "';";
         return executeQuery(sql);
     }
 
 
     getOne(id) {
         let sql = `SELECT * FROM ${this.tableName} WHERE id = ${id};`;
+        return executeQuery(sql, [id])
+            .then((results) => results[0]);
+    }
+
+    getUserGenres(id) {
+        let sql = `SELECT * FROM ${this.tableName} WHERE userid = ${id};`;
+        return executeQuery(sql, [id])
+            .then((results) => results[0]);
+    }
+
+    getUserInstruments(id) {
+        let sql = `SELECT * FROM ${this.tableName} WHERE userid = ${id};`;
         return executeQuery(sql, [id])
             .then((results) => results[0]);
     }
@@ -103,6 +133,7 @@ class Table {
     }
 
     insert(row) {
+        console.log('inserting...');
         let columns = Object.keys(row);
         let values = Object.values(row);
         let placeholderString = generatePlaceholders(values);

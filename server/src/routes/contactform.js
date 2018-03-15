@@ -6,7 +6,7 @@ router.post('/', (req, res, next) => {
     let messageBody = `Name: ${req.body.name}
                         Email: ${req.body.email}
                         Message: ${req.body.message}`;
-    sendEmail('contact email here', 'no-reply@covalence.io', 'New Contact Form Submission', messageBody)
+    sendEmail('walter.lee9@gmail.com', 'no-reply@gigfinder.io', 'New Contact Form Submission', messageBody)
         .then((response) => {
             res.sendStatus(201);
         }).catch((err) => {

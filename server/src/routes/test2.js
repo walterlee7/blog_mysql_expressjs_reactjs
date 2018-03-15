@@ -3,21 +3,20 @@ import Table from '../table';
 
 const router = express.Router();
 
-let test = new Table('test2');
+let test2 = new Table('test2');
 
-router.post('/', (req, res, next) => {
+router.put('/:id', (req, res, next) => {
 
-    console.log(req.body);
+    let instruments = req.body;
+    let id = req.params.id;
 
-    let instrument = req.body;
+    instruments.userid = id;
 
-    test.insertInstrument(instrument)
-        .then((id) => {
-            console.log('BE Success: Test');
-            console.log(id);
-            res.json(id);
-        }).catch(err => {
-            console.log('BE Fail: Test');
+    test2.updateInstrument(instruments)
+        .then(() => {
+            res.json({});
+        }).catch((err) => {
+            console.log('update Instrument fail')
             console.log(err);
         })
 });

@@ -3,15 +3,15 @@ import Table from '../table';
 
 const router = express.Router();
 
-let artists = new Table('artists');
+let users = new Table('users');
 
 router.get('/', (req, res) => {
-    artists.getAll()
-        .then((artists) => {
-            console.log('BE: Artists');
-            res.json(artists);
+    users.getAll()
+        .then((users) => {
+            console.log('BE: Get Users');
+            res.json(users);
         }).catch(err => {
-            // console.log('BE: Instrument');
+            console.log('BE: Get Users Error');
             console.log(err);
         });
 });
@@ -22,7 +22,7 @@ router.get('/both/:location/:instrument', (req, res) => {
     console.log(req.params);
     console.log('BE:' + location);
     console.log('BE:' + instrument);
-    artists.getLocationAndInstrument(location, instrument)
+    users.getLocationAndInstrument(location, instrument)
         .then((artists) => {
             console.log('BE: Location and Instrument');
             res.json(artists);
@@ -34,12 +34,12 @@ router.get('/both/:location/:instrument', (req, res) => {
 
 router.get('/:location?', (req, res) => {
     const location = req.params.location;
-    artists.getLocation(location)
+    users.getLocation(location)
         .then((artist) => {
-            console.log('BE: Artist Location');
+            console.log('BE: User Location');
             res.json(artist);
         }).catch(err => {
-            // console.log('BE: Instrument');
+            console.log('BE: User Location Error');
             console.log(err);
         });
 });
@@ -47,7 +47,7 @@ router.get('/:location?', (req, res) => {
 router.get('/instrument/:instrument?', (req, res) => {
     const instrument = req.params.instrument;
     console.log(instrument);
-    artists.getInstrument(instrument)
+    users.getInstrument(instrument)
         .then((artist) => {
             console.log('BE: Artist Instrument');
             res.json(artist);

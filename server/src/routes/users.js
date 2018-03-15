@@ -6,6 +6,7 @@ let router = Router();
 
 router.get('/me', tokenMiddleware, isLoggedIn, (req, res) => {
     delete req.user.hash;
+    // console.log('req.user: ' + req.user);
     res.json(req.user);
 });
 
