@@ -9,19 +9,26 @@ class Table {
 
     }
 
-    getRecent(userid) {
-        let sql = `SELECT *
-        FROM messages msg1
-        WHERE msg1.id = (
-             SELECT msg2.id
-             FROM messages msg2
-             WHERE msg2.receiverid = msg1.receiverid
-             ORDER BY msg2.id
-             LIMIT 1
-        )
-        group by _created DESC;`;
+    getUserInbox(userid) {
+        let sql = `
+        SELECT
+            IF(u.id = ?, u2.name, u.name) as friend,
+            m.*
+        FROM blog.messages m
+        JOIN blog.users u on u.id = m.userid
+        JOIN blog.users u2 on u2.id = m.receiverid
+        WHERE
+            (m.userid = ? OR m.receiverid = ?)
+        group by (friend)
+        order by _created DESC;`;
+        return executeQuery(sql, [userid, userid, userid]);
+    }
+
+    getUserConversation(userid, receiverid) {
+        let sql = `SELECT * FROM blog.messages WHERE (userid = ${userid} AND receiverid = ${receiverid}) OR (userid = ${receiverid} AND receiverid = ${userid}) order by _created ASC;`;
         return executeQuery(sql);
     }
+
 
     updateGenre(row) {
         let columns = Object.keys(row);
@@ -62,17 +69,17 @@ class Table {
     }
 
     getLocation(location) {
-        let sql = `SELECT users.name, users.location, users.id, users.aboutme FROM ${this.tableName} WHERE location = ` + `"${location}"`;
+        let sql = `SELECT users.name, users.location, users.id, users.aboutme, users.uri FROM ${this.tableName} WHERE location = ` + `"${location}"`;
         return executeQuery(sql);
     }
 
     getInstrument(instrument) {
-        let sql = `SELECT test2.userid, users.name, users.location, users.id, users.aboutme FROM test2 JOIN users ON users.id = test2.userid WHERE Concat(IFNULL(instrument0, ' '), IFNULL(instrument1, ' '), IFNULL(instrument2, ' '), IFNULL(instrument3, ' '), IFNULL(instrument4, ' '), IFNULL(instrument5, ' '), IFNULL(instrument6, ' '), IFNULL(instrument7, ' '), IFNULL(instrument8, ' '), IFNULL(instrument9, ' '), IFNULL(instrument10, ' '), IFNULL(instrument11, ' '), IFNULL(instrument12, ' '), IFNULL(instrument13, ' '), IFNULL(instrument14, ' '), IFNULL(instrument15, ' '), IFNULL(instrument16, ' '), IFNULL(instrument17, ' '), IFNULL(instrument18, ' '), IFNULL(instrument19, ' ')) like ` + "'%" + instrument + "%';";
+        let sql = `SELECT test2.userid, users.name, users.location, users.id, users.aboutme, users.uri FROM test2 JOIN users ON users.id = test2.userid WHERE Concat(IFNULL(instrument0, ' '), IFNULL(instrument1, ' '), IFNULL(instrument2, ' '), IFNULL(instrument3, ' '), IFNULL(instrument4, ' '), IFNULL(instrument5, ' '), IFNULL(instrument6, ' '), IFNULL(instrument7, ' '), IFNULL(instrument8, ' '), IFNULL(instrument9, ' '), IFNULL(instrument10, ' '), IFNULL(instrument11, ' '), IFNULL(instrument12, ' '), IFNULL(instrument13, ' '), IFNULL(instrument14, ' '), IFNULL(instrument15, ' '), IFNULL(instrument16, ' '), IFNULL(instrument17, ' '), IFNULL(instrument18, ' '), IFNULL(instrument19, ' ')) like ` + "'%" + instrument + "%';";
         return executeQuery(sql);
     }
 
     getLocationAndInstrument(location, instrument) {
-        let sql = `SELECT test2.userid, users.name, users.location, users.id, users.aboutme FROM test2 JOIN users ON users.id = test2.userid WHERE Concat(IFNULL(instrument0, ' '), IFNULL(instrument1, ' '), IFNULL(instrument2, ' '), IFNULL(instrument3, ' '), IFNULL(instrument4, ' '), IFNULL(instrument5, ' '), IFNULL(instrument6, ' '), IFNULL(instrument7, ' '), IFNULL(instrument8, ' '), IFNULL(instrument9, ' '), IFNULL(instrument10, ' '), IFNULL(instrument11, ' '), IFNULL(instrument12, ' '), IFNULL(instrument13, ' '), IFNULL(instrument14, ' '), IFNULL(instrument15, ' '), IFNULL(instrument16, ' '), IFNULL(instrument17, ' '), IFNULL(instrument18, ' '), IFNULL(instrument19, ' ')) like ` + "'%" + instrument + "%' AND users.location = " + "'" + location + "';";
+        let sql = `SELECT test2.userid, users.name, users.location, users.id, users.aboutme, users.uri FROM test2 JOIN users ON users.id = test2.userid WHERE Concat(IFNULL(instrument0, ' '), IFNULL(instrument1, ' '), IFNULL(instrument2, ' '), IFNULL(instrument3, ' '), IFNULL(instrument4, ' '), IFNULL(instrument5, ' '), IFNULL(instrument6, ' '), IFNULL(instrument7, ' '), IFNULL(instrument8, ' '), IFNULL(instrument9, ' '), IFNULL(instrument10, ' '), IFNULL(instrument11, ' '), IFNULL(instrument12, ' '), IFNULL(instrument13, ' '), IFNULL(instrument14, ' '), IFNULL(instrument15, ' '), IFNULL(instrument16, ' '), IFNULL(instrument17, ' '), IFNULL(instrument18, ' '), IFNULL(instrument19, ' ')) like ` + "'%" + instrument + "%' AND users.location = " + "'" + location + "';";
         return executeQuery(sql);
     }
 

@@ -15,6 +15,7 @@ router.get('/', (req, res) => {
         }).catch(err => {
             console.log('BE Fail: Genres');
             console.log(err);
+            res.sendStatus(500);
         });
 });
 
@@ -30,6 +31,7 @@ router.get('/:id?', (req, res) => {
         }).catch(err => {
             console.log('BE Fail: User Genres');
             console.log(err);
+            res.sendStatus(500);
         });
 });
 

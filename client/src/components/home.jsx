@@ -78,8 +78,8 @@ class Home extends Component {
                         <div className="row">
                             <div className="col-lg-8 col-md-10 mx-auto">
                                 <div className="site-heading">
-                                    <h1>Walt's Blog</h1>
-                                    <span className="subheading">A Blog Theme with ExpressJS, ReactJS, and MySQL</span>
+                                    <h1>Team GigFinder Website</h1>
+                                    <span className="subheading">Mobile App with ReactNative, ExpressJS, ReactJS, and MySQL</span>
                                 </div>
                             </div>
                         </div>
