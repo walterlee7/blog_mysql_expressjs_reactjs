@@ -22,7 +22,7 @@ router.get('/chat/:userid/:receiverid', (req, res) => {
 
 router.get('/inbox/:userid', (req, res) => {
     console.log(req.params.userid);
-    console.log('retreiving inbox');
+    console.log('retrieving inbox');
     // let inbox = req.body;
 
     messages.getUserInbox(req.params.userid)

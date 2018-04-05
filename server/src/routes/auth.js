@@ -11,11 +11,10 @@ router.post('/login', (req, res, next) => {
         } else if (!tok) {
             return res.status(401).json(info);
         } else {
+            console.log('tok: ' + tok);
             return res.status(201).json(tok);
         }
     })(req, res, next);
-    // console.log('res: ' + res);
-    // console.dir(res);
 });
 
 export default router;
